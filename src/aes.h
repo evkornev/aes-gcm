@@ -19,7 +19,6 @@ extern "C" {
 
 #include "aes-common.h"
 #include "aes-internal.h"
-#include "aes-debug.h"
 
 void * aes_encrypt_init(const aes_uchar *key, size_t len);
 void aes_encrypt(void *ctx, const aes_uchar *plain, aes_uchar *crypt);

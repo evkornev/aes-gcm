@@ -2,8 +2,6 @@
  * aes-gcm-test.c
  */
 
-#define AES_DEBUG
-
 #include "aes.h"
 
 const unsigned char t3_key[] = {
@@ -47,11 +45,11 @@ int main(int argc, const char **argv)
                         t3_aad, sizeof(t3_aad),
                         crypt_buf, tag_buf);
     
-    aes_printf(MSG_INFO, "t3 aes_gcm encrypt result %s",
+    printf("t3 aes_gcm encrypt result %s\n",
                result == 0 ? "PASS" : "FAIL");
-    aes_printf(MSG_INFO, "t3 aes_gcm encrypt crypt  %s",
+    printf("t3 aes_gcm encrypt crypt  %s\n",
                (memcmp(t3_crypt, crypt_buf, sizeof(t3_crypt)) == 0) ? "PASS" : "FAIL");
-    aes_printf(MSG_INFO, "t3 aes_gcm encrypt tag    %s",
+    printf("t3 aes_gcm encrypt tag    %s\n",
                (memcmp(t3_tag, tag_buf, sizeof(t3_tag)) == 0) ? "PASS" : "FAIL");
     
     result = aes_gcm_ad(t3_key, sizeof(t3_key),
@@ -60,9 +58,9 @@ int main(int argc, const char **argv)
                         t3_aad, sizeof(t3_aad),
                         tag_buf, plain_buf);
     
-    aes_printf(MSG_INFO, "t3 aes_gcm decrypt result %s",
+    printf("t3 aes_gcm decrypt result %s\n",
                result == 0 ? "PASS" : "FAIL");
-    aes_printf(MSG_INFO, "t3 aes_gcm decrypt plain  %s",
+    printf("t3 aes_gcm decrypt plain  %s\n",
                (memcmp(t3_plain, plain_buf, sizeof(t3_plain)) == 0) ? "PASS" : "FAIL");
     
     free(crypt_buf);

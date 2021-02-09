@@ -15,7 +15,6 @@
  */
 
 #include "aes.h"
-#include "aes-internal.h"
 
 /*
  * rijndael-alg-fst.c

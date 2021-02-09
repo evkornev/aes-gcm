@@ -179,7 +179,6 @@ static void * aes_gcm_init_hash_subkey(const aes_uchar *key, size_t key_len, aes
 	/* Generate hash subkey H = AES_K(0^128) */
 	memset(H, 0, AES_BLOCK_SIZE);
 	aes_encrypt(aes, H, H);
-	aes_hexdump_key(MSG_EXCESSIVE, "Hash subkey H for GHASH", H, AES_BLOCK_SIZE);
 	return aes;
 }
 
@@ -238,8 +237,6 @@ static void aes_gcm_ghash(const aes_uchar *H, const aes_uchar *aad, size_t aad_l
 	AES_PUT_BE64(len_buf, aad_len * 8);
 	AES_PUT_BE64(len_buf + 8, crypt_len * 8);
 	ghash(H, len_buf, sizeof(len_buf), S);
-
-	aes_hexdump_key(MSG_EXCESSIVE, "S = GHASH_H(...)", S, 16);
 }
 
 
@@ -306,7 +303,7 @@ int aes_gcm_ad(const aes_uchar *key, size_t key_len, const aes_uchar *iv, size_t
 	aes_encrypt_deinit(aes);
 
 	if (memcmp(tag, T, 16) != 0) {
-		aes_printf(MSG_EXCESSIVE, "GCM: Tag mismatch");
+		printf("GCM: Tag mismatch");
 		return -1;
 	}
 
