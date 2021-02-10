@@ -1,25 +1,16 @@
 
-OBJS =	src/aes-opencl-test.o \
-	src/aes-internal-dec.o \
-	src/aes-internal-enc.o \
-	src/aes-internal.o \
-	src/logging.o \
-	src/opencl.o
+LIB += aes_gcm.so
+CFLAGS += -fPIC
+CFLAGS += -shared
+LDFLAGS += -I/usr/include/lua5.3
+SRC_DIR:= src
+SRC = $(wildcard $(SRC_DIR)/*.c)
+OBJ = $(SRC:.c=.o)
+CC = gcc
 
-CFLAGS =   -O3 -Wall -std=c99
-CXXFLAGS = -O3 -Wall -std=c++11 -I/opt/AMDAPP/include/
-LDFLAGS = -lOpenCL
+${LIB}: $(OBJ)
+	$(CC) $(CFLAGS) -o $@ $^ $(LDFLAGS)
 
-all: aes-opencl-test
-
+.PHONY: clean
 clean:
-	rm -f src/*.o aes-opencl-test
-
-aes-opencl-test: $(OBJS)
-	g++  $(LDFLAGS) -o $@ $(OBJS)
-
-%.o : %.cc
-	g++ $(CXXFLAGS) -o $@ -c $<
-
-%.o : %.c
-	gcc $(CFLAGS) -o $@ -c $<
+	rm -f $(OBJ) ${LIB}
